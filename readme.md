@@ -11,7 +11,7 @@
 ## Installation
 Install via composer:
 ```
-composer require --dev galter/laravel-postman-export
+composer require --dev galter/laravel-postman-export-onepulse
 ```
 
 Add the service provider to your `providers` array in `config/app.php`
