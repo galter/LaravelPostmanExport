@@ -1,5 +1,5 @@
 {
-    "name": "galter/laravel-postman-export",
+    "name": "galter/laravel-postman-export-onepulse",
     "type": "library",
     "description": "Export your Laravel routes to a Postman collection .json file",
     "keywords": ["laravel","export","postman","collection"],
