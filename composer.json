@@ -11,11 +11,10 @@
             "email": "ehgalter@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
         "ramsey/uuid": "^3"
     },
-    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "galter\\LaravelPostmanExportOnePulse\\": "src/"
