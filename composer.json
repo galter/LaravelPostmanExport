@@ -3,7 +3,7 @@
     "type": "library",
     "description": "Export your Laravel routes to a Postman collection .json file",
     "keywords": ["laravel","export","postman","collection"],
-    "homepage": "https://github.com/galter/LaravelPostmanExport",
+    "homepage": "https://github.com/galter/LaravelPostmanExportOnePulse",
     "license": "MIT",
     "authors": [
         {
