@@ -15,6 +15,7 @@
     "require": {
         "ramsey/uuid": "^3"
     },
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "galter\\LaravelPostmanExport\\": "src/"
