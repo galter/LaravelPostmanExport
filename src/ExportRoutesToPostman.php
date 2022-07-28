@@ -1,6 +1,6 @@
 <?php
 
-namespace galter\LaravelPostmanExportOnepulse;
+namespace galter\LaravelPostmanExportOnePulse;
 
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Filesystem\Filesystem;

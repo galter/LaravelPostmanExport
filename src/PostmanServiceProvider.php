@@ -1,6 +1,6 @@
 <?php
 
-namespace galter\LaravelPostmanExportOnepulse;
+namespace galter\LaravelPostmanExportOnePulse;
 
 use Illuminate\Support\ServiceProvider;
 
