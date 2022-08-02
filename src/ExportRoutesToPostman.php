@@ -5,7 +5,8 @@ namespace galter\LaravelPostmanExportOnePulse;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Contracts\Filesystem\Cloud;
-use Illuminate\Routing\Router;
+// use Illuminate\Routing\Router;
+use Dingo\Api\Routing\Router;
 use Ramsey\Uuid\Uuid;
 
 class ExportRoutesToPostman extends Command
@@ -95,11 +96,11 @@ class ExportRoutesToPostman extends Command
 			],
 		];
 
-		foreach ($this->router->getRoutes() as $route) {
 
-			//$methods = array_filter($route->methods(), fn ($value) => $value !== 'HEAD');
+		foreach ($this->router->getRoutes('v1') as $route) {
+			$methods = array_filter($route->methods(), fn ($value) => $value !== 'HEAD');
 			//$middlewares = $route->gatherMiddleware();
-			//dd($route->methods);
+
 			//foreach ($route->methods as $method) {
 			foreach ($route->methods() as $method) {
 				if ('HEAD' == $method) {
@@ -109,9 +110,8 @@ class ExportRoutesToPostman extends Command
 				//GETTING @PARAMs @VARs @DESCRIPTIONs from PhpDoc comments
 				$p = $this->getParams($route);
 
-				//dd($route);
 				//API ROUTES
-				//if ($this->option('api') && "api" == $route->middleware()) {
+				// if ($this->option('api') && !empty($route->middleware()) && "web" != $route->middleware()[0]) {
 				$routes['item'][] = [
 					'name'     => $method . ' | ' . $route->uri(),
 					'request'  => [
@@ -139,40 +139,40 @@ class ExportRoutesToPostman extends Command
 				];
 				//}
 				//WEB ROUTES
-				//else if ($this->option('web') && "web" == $route->middleware()[0]) {
-				$routeType = 'web';
+				/*else if ($this->option('web') && "web" == $route->middleware()[0]) {
+					$routeType = 'web';
 
-				$routes['item'][] = [
-					'name'     => $method . ' | ' . $route->uri(),
-					'request'  => [
-						'url'         => $url . '/' . $route->uri(),
-						'params'      => [
-							'key'         => '',
-							'value'       => '',
-							'description' => '',
-						],
-						'method'      => strtoupper($method),
-						'header'      => [
-							[
-								'key'         => 'Content-Type',
-								'value'       => 'text/html',
+					$routes['item'][] = [
+						'name'     => $method . ' | ' . $route->uri(),
+						'request'  => [
+							'url'         => $url . '/' . $route->uri(),
+							'params'      => [
+								'key'         => '',
+								'value'       => '',
 								'description' => '',
 							],
+							'method'      => strtoupper($method),
+							'header'      => [
+								[
+									'key'         => 'Content-Type',
+									'value'       => 'text/html',
+									'description' => '',
+								],
+							],
+							'body'        => [
+								'mode' => 'raw',
+								'raw'  => '{\n    \n}',
+							],
+							'description' => '',
 						],
-						'body'        => [
-							'mode' => 'raw',
-							'raw'  => '{\n    \n}',
-						],
-						'description' => '',
-					],
-					'response' => [],
-				];
-				//}
+						'response' => [],
+					];
+				} */
 			}
 		}
 
 		$exportFile = $name . '_' . $routeType . '.json';
-		//dd(json_encode($routes));
+		
 		\Storage::disk('local')->put($exportFile, json_encode($routes));
 		if (!$this->files->put($exportFile, json_encode($routes))) {
 			$this->error('Export failed');
@@ -218,7 +218,11 @@ class ExportRoutesToPostman extends Command
 			if (null != $route_part) {
 				// getting commented strokes for function
 				preg_match_all("~//?\s*\*[\s\S]*?\*\s*//?~m", $route_part, $comments, PREG_OFFSET_CAPTURE);
-				$comment = end($comments[0])[0];
+				if (!empty(end($comments[0])[0])) {
+					$comment = end($comments[0])[0];
+				} else {
+					$comment = '';
+				}
 
 				//@description
 				preg_match_all("~@description([\s\S]*? )([\s\S]*?)\\@~", $comment, $descriptions, PREG_PATTERN_ORDER);
