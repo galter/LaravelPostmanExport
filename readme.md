@@ -2,6 +2,7 @@
 
 **Updates:**
 
+0. It's a Package created with Dingo Router to OnePulse internal use. Fork and rewrite as you wish.
 1. Postman collection scheme
 2. Artisan consol commands
 3. Can post project **URL** address via console
@@ -34,7 +35,7 @@ php artisan postman:export
 This will create a `postman_collection.json` inside your `storage/app` folder. You are free to change the name of the file by specifying the filename as follows:
 
 ```
-php artisan postman:export --name=MyAppName --url=http://localhost --port=8000 --api
+php artisan postman:export --name=MyAppName --api
 ```
 
 ### phpdoc Code rules
